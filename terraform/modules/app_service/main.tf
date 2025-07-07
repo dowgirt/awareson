@@ -13,9 +13,11 @@ resource "azurerm_linux_web_app" "web_app" {
   resource_group_name = var.resource_group_name
   service_plan_id     = azurerm_service_plan.app_plan.id
 
+  https_only = true
+
   site_config {
     linux_fx_version = var.linux_fx_version
   }
 
-  https_only = true
+  app_settings = var.app_settings
 }

@@ -21,5 +21,8 @@ module "app_service" {
   app_service_plan_name = local.app_service_plan_name
   app_service_name      = local.app_service_name
   sku_name              = "F1" # najtańsza opcja
-  linux_fx_version      = "DOTNETCORE|6.0"
+  linux_fx_version      = "NODE|18-lts"
+  app_settings = {
+    "APP_ENV" = "dev"
+  }
 }
