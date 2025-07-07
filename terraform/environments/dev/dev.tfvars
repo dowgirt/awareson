@@ -1,6 +1,4 @@
 # General
-
-location    = "Poland Central"
 project     = "awareson"
 environment = "dev"
 

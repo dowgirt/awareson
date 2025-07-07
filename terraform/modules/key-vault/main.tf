@@ -1,7 +1,7 @@
 resource "azurerm_key_vault" "kv" {
   name                        = var.kv_name
-  location                    = var.resource_group.location
-  resource_group_name         = var.resource_group.name
+  location                    = var.location
+  resource_group_name         = var.resource_group_name
   enabled_for_disk_encryption = true
   tenant_id                   = var.tenant_id
   soft_delete_retention_days  = 7

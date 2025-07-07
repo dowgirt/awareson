@@ -18,12 +18,13 @@ resource "random_integer" "sql_admin_suffix" {
 }
 
 module "key_vault" {
-  source         = "../../modules/key-vault"
-  kv_name        = local.key_vault_name
-  resource_group = data.azurerm_resource_group.rg.name
-  object_id      = data.azurerm_client_config.current.object_id
-  tenant_id      = data.azurerm_client_config.current.tenant_id
-  tags           = var.tags
+  source              = "../../modules/key-vault"
+  kv_name             = local.key_vault_name
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  object_id           = data.azurerm_client_config.current.object_id
+  tenant_id           = data.azurerm_client_config.current.tenant_id
+  tags                = var.tags
 }
 
 module "sql_server_secrets" {
@@ -37,7 +38,8 @@ module "sql_server_secrets" {
 
 module "sql_server_databases" {
   source                    = "../../modules/sql-server-and-database"
-  resource_group            = data.azurerm_resource_group.rg.name
+  resource_group_name       = data.azurerm_resource_group.rg.name
+  location                  = data.azurerm_resource_group.rg.location
   sql_server_name           = local.sql_server_name
   sql_server_admin_password = random_password.sql_admin_password.result
   sql_server_admin_username = "admin${random_integer.sql_admin_suffix.result}"
@@ -48,7 +50,7 @@ module "sql_server_databases" {
 module "network" {
   source              = "../../modules/network"
   resource_group_name = data.azurerm_resource_group.rg.name
-  location            = var.location
+  location            = data.azurerm_resource_group.rg.location
   vnet_name           = local.vnet_name
   address_space       = var.address_space
   app_subnet_name     = local.app_subnet_name
@@ -60,7 +62,7 @@ module "network" {
 module "app_service" {
   source                = "../../modules/app_service"
   resource_group_name   = data.azurerm_resource_group.rg.name
-  location              = var.location
+  location              = data.azurerm_resource_group.rg.location
   app_service_plan_name = local.app_service_plan_name
   app_service_name      = local.app_service_name
   sku_name              = "B1"
