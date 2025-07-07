@@ -1,12 +1,10 @@
 locals {
-  resources_suffix = "${var.project}-${var.environment}"
-
-  vnet_name       = "vnet-${local.resources_suffix}"
-  app_subnet_name = "sub-app-${local.resources_suffix}"
-  db_subnet_name  = "sub-db-${local.resources_suffix}"
-
-  app_service_plan_name = "plan-${local.resources_suffix}"
-  app_service_name      = "app-${local.resources_suffix}"
+  resources_suffix        = "${var.project}-${var.environment}"
+  vnet_name               = "vnet-${local.resources_suffix}"
+  app_subnet_name         = "sub-app-${local.resources_suffix}"
+  db_subnet_name          = "sub-db-${local.resources_suffix}"
+  app_service_plan_name   = "plan-${local.resources_suffix}"
+  app_service_name        = "app-${local.resources_suffix}"
 }
 
 variable "location" {
