@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      - 'feat/**'
+      - 'fix/**'
     paths:
       - 'terraform/environments/dev/**'
       - '.github/workflows/deploy-dev.yml'
@@ -18,6 +20,8 @@ jobs:
   terraform-plan:
     name: Terraform Plan (DEV)
     runs-on: ubuntu-latest
+    environment:
+      name: dev 
     defaults:
       run:
         working-directory: ${{ env.TF_DIR }}
