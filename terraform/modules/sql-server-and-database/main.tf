@@ -11,12 +11,13 @@ resource "azurerm_mssql_server" "mssql_server" {
 }
 
 resource "azurerm_mssql_database" "db" {
-  for_each       = var.databases
-  server_id      = azurerm_mssql_server.mssql_server.id
-  name           = each.key
-  max_size_gb    = each.value.max_size_gb
-  sku_name       = each.value.sku_name
-  zone_redundant = each.value.zone_redundant
+  for_each             = var.databases
+  server_id            = azurerm_mssql_server.mssql_server.id
+  name                 = each.key
+  max_size_gb          = each.value.max_size_gb
+  sku_name             = each.value.sku_name
+  zone_redundant       = each.value.zone_redundant
+  storage_account_type = each.value.storage_account_type
 
   tags = var.tags
 }
