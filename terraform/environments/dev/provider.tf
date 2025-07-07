@@ -7,17 +7,15 @@ terraform {
   }
 
   required_version = ">= 1.12.2"
-}
 
-provider "azurerm" {
-  features {}
-}
-
-terraform {
   backend "azurerm" {
     resource_group_name  = "awareson-dev-plc-rg"
     storage_account_name = "awrsndevplctfsa"
     container_name       = "tfstate"
     key                  = "terraform-dev.tfstate"
   }
+}
+
+provider "azurerm" {
+  features {}
 }
