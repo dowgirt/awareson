@@ -5,6 +5,8 @@ locals {
   db_subnet_name          = "sub-db-${local.resources_suffix}"
   app_service_plan_name   = "plan-${local.resources_suffix}"
   app_service_name        = "app-${local.resources_suffix}"
+  sql_server_name           = "sql-${local.resources_suffix}"
+  key_vault_name            = "kv-${local.resources_suffix}"
 }
 
 variable "location" {
@@ -31,3 +33,5 @@ variable "db_subnet_prefix" {
   description = "CIDR block for the database subnet"
   type        = string
 }
+
+variable "tags" {}
