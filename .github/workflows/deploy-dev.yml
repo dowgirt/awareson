@@ -8,13 +8,15 @@ on:
       - 'terraform/environments/dev/**'
       - '.github/workflows/deploy-dev.yml'
 
+  workflow_dispatch:
+
 env:
   ENVIRONMENT: dev
   TF_DIR: terraform/environments/dev
 
 jobs:
-  terraform:
-    name: Terraform Deploy (DEV)
+  terraform-plan:
+    name: Terraform Plan (DEV)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -41,7 +43,37 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -var-file="terraform-${{ env.ENVIRONMENT }}.tfvars"
+        id: plan
+        run: terraform plan -var-file="terraform.tfvars"
+
+  terraform-apply:
+    name: Terraform Apply (DEV)
+    needs: terraform-plan
+    if: success()
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+
+    defaults:
+      run:
+        working-directory: ${{ env.TF_DIR }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.12.2
+
+      - name: Terraform Init
+        run: terraform init
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve -var-file="terraform-${{ env.ENVIRONMENT }}.tfvars"
+        run: terraform apply -auto-approve -var-file="terraform.tfvars"
