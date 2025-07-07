@@ -3,7 +3,6 @@
 location    = "Poland Central"
 project     = "awareson"
 environment = "dev"
-region_code = "plc"
 
 # Subnet CIDRs
 

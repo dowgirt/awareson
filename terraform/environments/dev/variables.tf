@@ -1,3 +1,14 @@
+locals {
+  resources_suffix = "${var.project}-${var.environment}"
+
+  vnet_name       = "vnet-${resources_suffix}"
+  app_subnet_name = "sub-app-${resources_suffix}"
+  db_subnet_name  = "sub-db-${resources_suffix}"
+
+  app_service_plan_name = "plan-${resources_suffix}"
+  app_service_name      = "app-${resources_suffix}"
+}
+
 variable "location" {
   description = "Azure region for all resources"
   type        = string
@@ -8,10 +19,6 @@ variable "project" {
 }
 variable "environment" {
   description = "Deployment environment"
-  type        = string
-}
-variable "region_code" {
-  description = "Region code abbreviation"
   type        = string
 }
 variable "address_space" {
