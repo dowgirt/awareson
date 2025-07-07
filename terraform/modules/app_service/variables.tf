@@ -29,14 +29,3 @@ variable "os_type" {
   default     = "Linux"
   description = "Operating system: Linux or Windows"
 }
-
-variable "linux_fx_version" {
-  description = "Runtime stack version (e.g., NODE|18-lts, PYTHON|3.11)"
-  type        = string
-}
-
-variable "app_settings" {
-  description = "App settings for the App Service"
-  type        = map(string)
-  default     = {}
-}

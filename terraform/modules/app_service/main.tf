@@ -3,7 +3,6 @@ resource "azurerm_service_plan" "app_plan" {
   location            = var.location
   resource_group_name = var.resource_group_name
   os_type             = var.os_type
-
   sku_name = var.sku_name
 }
 
@@ -13,11 +12,5 @@ resource "azurerm_linux_web_app" "web_app" {
   resource_group_name = var.resource_group_name
   service_plan_id     = azurerm_service_plan.app_plan.id
 
-  https_only = true
-
-  site_config {
-    linux_fx_version = var.linux_fx_version
-  }
-
-  app_settings = var.app_settings
+  site_config {}
 }
