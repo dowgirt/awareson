@@ -7,6 +7,7 @@ locals {
   app_service_name      = "app-${local.resources_suffix}"
   sql_server_name       = "sql-${local.resources_suffix}"
   key_vault_name        = "kv-${local.resources_suffix}"
+  sql_private_endpoint_name = "pep-${local.resources_suffix}"
 }
 variable "project" {
   description = "Project or company name"
