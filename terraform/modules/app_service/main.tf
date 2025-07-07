@@ -12,5 +12,7 @@ resource "azurerm_linux_web_app" "web_app" {
   resource_group_name = var.resource_group_name
   service_plan_id     = azurerm_service_plan.app_plan.id
 
-  site_config {}
+  site_config {
+    always_on = false # false due to usage of the cheapest SKU (F1)
+  }
 }
