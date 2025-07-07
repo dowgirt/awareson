@@ -33,5 +33,5 @@ variable "db_subnet_prefix" {
   description = "CIDR block for the database subnet"
   type        = string
 }
-
+variable "databases" {}
 variable "tags" {}

@@ -1,3 +1,5 @@
+data "azurerm_client_config" "current" {}
+
 data "azurerm_resource_group" "rg" {
   name = "awareson-dev-plc-rg"
 }
@@ -18,7 +20,7 @@ resource "random_integer" "sql_admin_suffix" {
 module "key_vault" {
   source         = "../../modules/key-vault"
   kv_name        = local.key_vault_name
-  resource_group = module.rg
+  resource_group = data.azurerm_resource_group.rg.name
   object_id      = data.azurerm_client_config.current.object_id
   tenant_id      = data.azurerm_client_config.current.tenant_id
   tags           = var.tags
@@ -35,7 +37,7 @@ module "sql_server_secrets" {
 
 module "sql_server_databases" {
   source                    = "../../modules/sql-server-and-database"
-  resource_group            = module.rg
+  resource_group            = data.azurerm_resource_group.rg.name
   sql_server_name           = local.sql_server_name
   sql_server_admin_password = random_password.sql_admin_password.result
   sql_server_admin_username = "admin${random_integer.sql_admin_suffix.result}"
