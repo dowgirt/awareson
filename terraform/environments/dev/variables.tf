@@ -14,10 +14,6 @@ variable "region_code" {
   description = "Region code abbreviation"
   type        = string
 }
-variable "resource_group_name" {
-  description = "Resource Group name"
-  type        = string
-}
 variable "address_space" {
   description = "Address space for the VNet"
   type        = list(string)
