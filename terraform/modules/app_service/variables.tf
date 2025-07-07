@@ -29,3 +29,9 @@ variable "os_type" {
   default     = "Linux"
   description = "Operating system: Linux or Windows"
 }
+
+variable "linux_fx_version" {
+  type        = string
+  default     = "Linux"
+  description = "Linux version"
+}

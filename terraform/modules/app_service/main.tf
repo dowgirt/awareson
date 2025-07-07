@@ -14,7 +14,7 @@ resource "azurerm_linux_web_app" "web_app" {
   service_plan_id     = azurerm_service_plan.app_plan.id
 
   site_config {
-    linux_fx_version = "DOTNETCORE|6.0"
+    linux_fx_version = var.linux_fx_version
   }
 
   https_only = true
