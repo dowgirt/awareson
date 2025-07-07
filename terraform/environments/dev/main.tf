@@ -20,5 +20,5 @@ module "app_service" {
   location              = var.location
   app_service_plan_name = local.app_service_plan_name
   app_service_name      = local.app_service_name
-  sku_name              = "F1" # najtańsza opcja
+  sku_name              = "B1"
 }
