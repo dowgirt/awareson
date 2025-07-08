@@ -24,3 +24,5 @@ variable "tags" {
   default     = {}
   description = "Tags to apply to resources"
 }
+
+variable "app_service_principal_id" {}

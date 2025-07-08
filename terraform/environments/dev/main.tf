@@ -73,26 +73,26 @@ module "network" {
 }
 
 module "acr" {
-  source              = "../../modules/acr"
-  acr_name            = local.acr_name
-  resource_group_name = data.azurerm_resource_group.rg.name
-  location            = data.azurerm_resource_group.rg.location
-  tags                = var.tags
+  source                   = "../../modules/acr"
+  acr_name                 = local.acr_name
+  resource_group_name      = data.azurerm_resource_group.rg.name
+  location                 = data.azurerm_resource_group.rg.location
+  tags                     = var.tags
+  app_service_principal_id = module.app_service.app_service_principal_id
 }
 
 module "app_service" {
-  source                   = "../../modules/app_service"
-  resource_group_name      = data.azurerm_resource_group.rg.name
-  location                 = data.azurerm_resource_group.rg.location
-  app_service_plan_name    = local.app_service_plan_name
-  app_service_name         = local.app_service_name
-  sku_name                 = var.app_service_sku_name
-  acr_identity_id          = module.acr.managed_identity_id
-  app_settings             = local.app_settings
-  docker_image_name        = local.docker_image_name
-  docker_registry_url      = local.docker_registry_url
-  docker_registry_username = local.docker_registry_username
-  docker_registry_password = local.docker_registry_password
+  source                = "../../modules/app_service"
+  resource_group_name   = data.azurerm_resource_group.rg.name
+  location              = data.azurerm_resource_group.rg.location
+  app_service_plan_name = local.app_service_plan_name
+  app_service_name      = local.app_service_name
+  sku_name              = var.app_service_sku_name
+  acr_identity_id       = module.acr.managed_identity_id
+  app_settings          = local.app_settings
+  docker_image_name     = local.docker_image_name
+  docker_registry_url   = local.docker_registry_url
+
 }
 
 
