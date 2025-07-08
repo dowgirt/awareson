@@ -7,36 +7,33 @@ const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
 
-// Konfiguracja bazy MSSQL
 const dbConfig = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   server: process.env.DB_SERVER,
   database: process.env.DB_NAME,
   options: {
-    encrypt: true, // Azure SQL
+    encrypt: true,
     trustServerCertificate: false,
   },
 };
 
-// Funkcja tworząca tabelę, jeśli nie istnieje
 async function createTableIfNotExists() {
   try {
     const pool = await sql.connect(dbConfig);
-    const tableCheck = await pool.request().query(`
+    await pool.request().query(`
       IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='messages' AND xtype='U')
       CREATE TABLE messages (
         id INT IDENTITY(1,1) PRIMARY KEY,
         text NVARCHAR(MAX) NOT NULL
       )
     `);
-    console.log('Tabela messages jest gotowa');
+    console.log('✅ Table "messages" is ready');
   } catch (err) {
-    console.error('Błąd przy tworzeniu tabeli:', err);
+    console.error('❌ Error creating table:', err);
   }
 }
 
-// Uruchomienie tworzenia tabeli przy starcie
 createTableIfNotExists();
 
 app.get('/api/messages', async (req, res) => {
@@ -58,6 +55,18 @@ app.post('/api/messages', async (req, res) => {
     await sql.connect(dbConfig);
     await sql.query`INSERT INTO messages (text) VALUES (${text})`;
     res.status(201).send('Message saved');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('DB error');
+  }
+});
+
+app.delete('/api/messages/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await sql.connect(dbConfig);
+    await sql.query`DELETE FROM messages WHERE id = ${id}`;
+    res.status(200).send('Message deleted');
   } catch (err) {
     console.error(err);
     res.status(500).send('DB error');

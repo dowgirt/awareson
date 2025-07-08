@@ -29,9 +29,23 @@ function App() {
         body: JSON.stringify({ text: message }),
       });
       setMessage('');
-      fetchMessages(); // reload after insert
+      fetchMessages();
     } catch (error) {
       console.error('Error submitting message:', error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this message?');
+    if (!confirmDelete) return;
+
+    try {
+      await fetch(`/api/messages/${id}`, {
+        method: 'DELETE',
+      });
+      fetchMessages();
+    } catch (err) {
+      console.error('Error deleting message:', err);
     }
   };
 
@@ -41,14 +55,14 @@ function App() {
 
   return (
     <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
-      <h1>Wiadomości z bazy danych MSSQL</h1>
+      <h1>Send a message to display it</h1>
 
       <form onSubmit={handleSubmit} style={{ marginBottom: '1rem' }}>
         <input
           type="text"
           value={message}
           onChange={e => setMessage(e.target.value)}
-          placeholder="Wprowadź wiadomość"
+          placeholder="Enter a message"
           style={{
             padding: '0.5rem',
             width: '300px',
@@ -72,16 +86,30 @@ function App() {
       </form>
 
       <div>
-        <h2>Odebrane wiadomości:</h2>
+        <h2>Received messages:</h2>
         {loading ? (
           <p>Ładowanie...</p>
         ) : messages.length === 0 ? (
-          <p>Brak wiadomości</p>
+          <p>No messages available</p>
         ) : (
           <ul>
             {messages.map(msg => (
               <li key={msg.id} style={{ padding: '0.25rem 0' }}>
                 {msg.text}
+                <button
+                  onClick={() => handleDelete(msg.id)}
+                  style={{
+                    marginLeft: '1rem',
+                    backgroundColor: '#dc3545',
+                    color: 'white',
+                    border: 'none',
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Usuń
+                </button>
               </li>
             ))}
           </ul>
