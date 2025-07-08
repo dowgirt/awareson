@@ -1,9 +1,10 @@
+
 const sql = require('mssql');
 (async () => {
 try {
     const config = {
-    user: process.env.SQL_SERVER_ADMIN_USERNAME,
-    password: process.env.SQL_SERVER_ADMIN_PASSWORD,
+    user: process.env.sql-server-admin-username,
+    password: process.env.sql-server-admin-password,
     server: process.env.DB_SERVER,
     database: process.env.DB_NAME,
     options: { encrypt: true }
