@@ -35,11 +35,8 @@ This project demonstrates the complete deployment process of a web application o
 
 ## Technologies
 
-- Azure App Service  
-- Azure Database for MySQL
+- Azure
+- GitHub Actions
 - Terraform  
 - Docker  
 - Node.js / Bash
-- GitHub Actions
-- Azure Container Registry
-
