@@ -45,30 +45,12 @@ jobs:
 
       - name: Run DB connection test
         run: node scripts/test-db-connection.js
+        env: 
+          DB_USER: ${{ env.sql-server-admin-username }}
+          DB_PASSWORD: ${{ env.sql-server-admin-password }}
+          DB_SERVER: ${{ env.DB_SERVER }}
+          DB_NAME: ${{ env.DB_NAME }}
 
-    #   - name: Run DB connection test
-    #     run: |
-    #       node -e "
-    #       const sql = require('mssql');
-    #       (async () => {
-    #         try {
-    #           const config = {
-    #             user: process.env.SQL_SERVER_ADMIN_USERNAME,
-    #             password: process.env.SQL_SERVER_ADMIN_PASSWORD,
-    #             server: process.env.DB_SERVER,
-    #             database: process.env.DB_NAME,
-    #             options: { encrypt: true }
-    #           };
-    #           const pool = await sql.connect(config);
-    #           console.log('DB connection successful');
-    #           await pool.close();
-    #           process.exit(0);
-    #         } catch (err) {
-    #           console.error('DB connection failed:', err);
-    #           process.exit(1);
-    #         }
-    #       })();
-    #       "
 
   build-push:
     runs-on: ubuntu-latest
