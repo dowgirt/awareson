@@ -54,69 +54,128 @@ function App() {
   }, []);
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
-      <h1>Send a message to display it</h1>
+    <div style={styles.container}>
+      <header style={styles.header}>
+        <h1 style={styles.title}>📨 Message Board</h1>
+        <p style={styles.subtitle}>Send a message to display it from the MSSQL database</p>
+      </header>
 
-      <form onSubmit={handleSubmit} style={{ marginBottom: '1rem' }}>
+      <form onSubmit={handleSubmit} style={styles.form}>
         <input
           type="text"
           value={message}
           onChange={e => setMessage(e.target.value)}
-          placeholder="Enter a message"
-          style={{
-            padding: '0.5rem',
-            width: '300px',
-            marginRight: '0.5rem',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-          }}
+          placeholder="Write your message..."
+          style={styles.input}
         />
-        <button
-          type="submit"
-          style={{
-            padding: '0.5rem 1rem',
-            backgroundColor: '#007bff',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-          }}
-        >
-          Wyślij
+        <button type="submit" style={styles.button}>
+          Send
         </button>
       </form>
 
-      <div>
-        <h2>Received messages:</h2>
+      <section style={styles.messageSection}>
+        <h2 style={styles.sectionTitle}>Received messages</h2>
         {loading ? (
-          <p>Ładowanie...</p>
+          <p style={styles.info}>Loading...</p>
         ) : messages.length === 0 ? (
-          <p>No messages available</p>
+          <p style={styles.info}>No messages found</p>
         ) : (
-          <ul>
+          <ul style={styles.list}>
             {messages.map(msg => (
-              <li key={msg.id} style={{ padding: '0.25rem 0' }}>
-                {msg.text}
+              <li key={msg.id} style={styles.messageItem}>
+                <span>{msg.text}</span>
                 <button
                   onClick={() => handleDelete(msg.id)}
-                  style={{
-                    marginLeft: '1rem',
-                    backgroundColor: '#dc3545',
-                    color: 'white',
-                    border: 'none',
-                    padding: '0.25rem 0.5rem',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                  }}
+                  style={styles.deleteButton}
+                  title="Delete message"
                 >
-                  Usuń
+                  🗑️
                 </button>
               </li>
             ))}
           </ul>
         )}
-      </div>
+      </section>
     </div>
   );
 }
+
+const styles = {
+  container: {
+    maxWidth: '600px',
+    margin: '0 auto',
+    padding: '2rem',
+    fontFamily: `'Segoe UI', Tahoma, Geneva, Verdana, sans-serif`,
+    backgroundColor: '#f9f9f9',
+    minHeight: '100vh',
+  },
+  header: {
+    marginBottom: '2rem',
+    textAlign: 'center',
+  },
+  title: {
+    margin: 0,
+    fontSize: '2rem',
+    color: '#333',
+  },
+  subtitle: {
+    color: '#555',
+    marginTop: '0.5rem',
+  },
+  form: {
+    display: 'flex',
+    marginBottom: '2rem',
+    gap: '0.5rem',
+  },
+  input: {
+    flex: 1,
+    padding: '0.75rem',
+    fontSize: '1rem',
+    border: '1px solid #ccc',
+    borderRadius: '6px',
+  },
+  button: {
+    padding: '0.75rem 1.5rem',
+    backgroundColor: '#007bff',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '6px',
+    cursor: 'pointer',
+  },
+  messageSection: {
+    backgroundColor: '#fff',
+    border: '1px solid #ddd',
+    padding: '1rem',
+    borderRadius: '6px',
+  },
+  sectionTitle: {
+    fontSize: '1.25rem',
+    marginBottom: '1rem',
+    color: '#222',
+  },
+  list: {
+    listStyle: 'none',
+    paddingLeft: 0,
+    margin: 0,
+  },
+  messageItem: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '0.5rem 0',
+    borderBottom: '1px solid #eee',
+  },
+  deleteButton: {
+    background: 'none',
+    border: 'none',
+    fontSize: '1rem',
+    cursor: 'pointer',
+    color: '#dc3545',
+  },
+  info: {
+    color: '#777',
+    fontStyle: 'italic',
+  },
+};
 
 export default App;
