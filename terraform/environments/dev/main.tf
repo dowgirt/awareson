@@ -53,7 +53,7 @@ module "sql_private_endpoint" {
   name                           = local.sql_private_endpoint_name
   resource_group_name            = data.azurerm_resource_group.rg.name
   location                       = data.azurerm_resource_group.rg.location
-  subnet_id                      = module.network.app_subnet_id
+  subnet_id                      = module.network.db_subnet_id
   private_connection_resource_id = module.sql_server_databases.sql_server_id
   sql_server_name                = module.sql_server_databases.sql_server_name
   vnet_id                        = module.network.vnet_id
