@@ -1,14 +1,14 @@
 locals {
-  resources_suffix      = "${var.project}-${var.environment}"
-  vnet_name             = "vnet-${local.resources_suffix}"
-  app_subnet_name       = "sub-app-${local.resources_suffix}"
-  db_subnet_name        = "sub-db-${local.resources_suffix}"
-  app_service_plan_name = "plan-${local.resources_suffix}"
-  app_service_name      = "app-${local.resources_suffix}"
-  sql_server_name       = "sql-${local.resources_suffix}"
-  key_vault_name        = "kv-${local.resources_suffix}"
+  resources_suffix          = "${var.project}${var.project}"
+  vnet_name                 = "vnet-${local.resources_suffix}"
+  app_subnet_name           = "sub-app-${local.resources_suffix}"
+  db_subnet_name            = "sub-db-${local.resources_suffix}"
+  app_service_plan_name     = "plan-${local.resources_suffix}"
+  app_service_name          = "app-${local.resources_suffix}"
+  sql_server_name           = "sql-${local.resources_suffix}"
+  key_vault_name            = "kv-${local.resources_suffix}"
   sql_private_endpoint_name = "pep-${local.resources_suffix}"
-  acr_name = "acr-${local.resources_suffix}"
+  acr_name                  = "acr${var.project}${var.project}"
 }
 variable "project" {
   description = "Project or company name"
