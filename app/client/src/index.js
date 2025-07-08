@@ -1,13 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-
-const App = () => (
-  <div style={{ fontFamily: 'sans-serif', padding: '2rem' }}>
-    <h1>Hello from React frontend!</h1>
-    <p>This is rendered by React.</p>
-  </div>
-);
+import App from './App'; // ← używamy komponentu z App.js
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
