@@ -12,6 +12,16 @@ resource "azurerm_linux_web_app" "web_app" {
   resource_group_name = var.resource_group_name
   service_plan_id     = azurerm_service_plan.app_plan.id
 
-  site_config {
+  identity {
+    type         = "UserAssigned"
+    identity_ids = [var.acr_identity_id]
   }
+  site_config {
+    application_stack {
+      docker_image_name   = var.docker_image_name   # np. "myapp:latest"
+      docker_registry_url = var.docker_registry_url # np. "https://myacr.azurecr.io"
+    }
+  }
+
+  app_settings = var.app_settings
 }
