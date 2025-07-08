@@ -6,7 +6,7 @@
 
 ## Overview
 
-This project demonstrates the complete deployment process of a web application on Microsoft Azure using Infrastructure as Code (IaC) with Terraform, containerization with Docker, and automated deployment with a CI/CD pipeline (GitHub Actions or GitLab CI).
+This project demonstrates the complete deployment process of a web application on Microsoft Azure using Infrastructure as Code (IaC) with Terraform, containerization with Docker, and automated deployment with a CI/CD pipeline (GitHub Actions).
 
 ---
 
