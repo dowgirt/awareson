@@ -17,6 +17,9 @@ databases = {
   }
 }
 
+# ACR
+acr_sku = "Basic"
+
 # App Services SKU
 app_service_sku_name = "B1"
 

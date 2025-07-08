@@ -57,6 +57,11 @@ variable "app_service_sku_name" {
   type        = string
 }
 
+variable "acr_sku" {
+  description = "SKU name for the ACR"
+  type        = string
+}
+
 variable "tags" {
   description = "Tags to apply to resources"
   type        = map(string)
