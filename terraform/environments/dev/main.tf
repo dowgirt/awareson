@@ -87,5 +87,5 @@ module "app_service" {
   app_service_plan_name = local.app_service_plan_name
   app_service_name      = local.app_service_name
   sku_name              = "B1"
-  acr_identity_id       = module.acr.azurerm_user_assigned_identity.acr_id
+  acr_identity_id       = module.acr.acr_id
 }
