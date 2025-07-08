@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: Build & Publish App
 
 on:
   workflow_dispatch:
@@ -65,7 +65,6 @@ jobs:
     environment: dev
     needs: db-test
     env:
-      ACR_SERVER_NAME: ${{ env.ACR_SERVER_NAME }}
       IMAGE_TAG: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v3
@@ -89,9 +88,6 @@ jobs:
     environment: dev
     needs: build-push
     env:
-      ACR_SERVER_NAME: ${{ env.ACR_SERVER_NAME }}
-      APP_SERVICE_NAME: ${{ env.APP_SERVICE_NAME }}
-      RESOURCE_GROUP: ${{ env.RESOURCE_GROUP }}
       IMAGE_TAG: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v3
