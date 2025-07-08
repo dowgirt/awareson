@@ -14,11 +14,12 @@ locals {
   docker_registry_url = "https://${module.acr.acr_login_server}"
 
   app_settings = {
-    DB_HOST                             = "${module.sql_server_databases.sql_server_fqdn}"
+    DB_SERVER                             = "${module.sql_server_databases.sql_server_fqdn}"
     DB_NAME                             = "db1"
     DB_USER                             = "admin${random_integer.sql_admin_suffix.result}"
     DB_PASSWORD                         = "${random_password.sql_admin_password.result}"
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = "false"
+    WEBSITES_PORT                       = "3000"
   }
 }
 variable "project" {

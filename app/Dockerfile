@@ -1,20 +1,26 @@
-FROM python:3.10-slim-bullseye
-
-# Instalacja zależności systemowych i ODBC Drivera
-RUN apt-get update && apt-get install -y \
-    gnupg curl unixodbc-dev gcc g++ && \
-    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
-    curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
-    apt-get update && ACCEPT_EULA=Y apt-get install -y msodbcsql17 && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# Etap 1: build Reacta
+FROM node:18 AS build
 
 WORKDIR /app
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+COPY client/package*.json ./client/
+RUN cd client && npm install
 
-COPY . .
+COPY client ./client
+RUN cd client && npm run build
 
-EXPOSE 80
+# Etap 2: uruchomienie Node.js backendu z Reactem
+FROM node:18
 
-CMD ["gunicorn", "-b", "0.0.0.0:80", "app:app"]
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install express mssql
+
+COPY server.js ./
+COPY --from=build /app/client/build ./client/build
+
+ENV PORT=3000
+EXPOSE 3000
+
+CMD ["node", "server.js"]
