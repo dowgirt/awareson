@@ -47,7 +47,9 @@ jobs:
           echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> $GITHUB_ENV
 
       - name: Run DB connection test
-        run: bash scripts/test-db-connection.sh
+        run: |
+          export PATH="$PATH:/opt/mssql-tools/bin"
+          bash scripts/test-db-connection.sh
         env: 
           DB_USER: ${{ env.sql-server-admin-username }}
           DB_PASSWORD: ${{ env.sql-server-admin-password }}
