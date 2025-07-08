@@ -1,21 +1,54 @@
 import React, { useEffect, useState } from 'react';
 
 function App() {
-  const [data, setData] = useState([]);
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+
+  const fetchMessages = () => {
+    fetch('/api/messages')
+      .then(res => res.json())
+      .then(setMessages)
+      .catch(console.error);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!message.trim()) return;
+
+    try {
+      await fetch('/api/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: message }),
+      });
+      setMessage('');
+      fetchMessages();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    fetch('/api/data')
-      .then(res => res.json())
-      .then(setData)
-      .catch(console.error);
+    fetchMessages();
   }, []);
 
   return (
-    <div>
+    <div style={{ padding: '1rem' }}>
       <h1>Dane z MSSQL</h1>
+
+      <form onSubmit={handleSubmit}>
+        <input
+          value={message}
+          onChange={e => setMessage(e.target.value)}
+          placeholder="Napisz wiadomość"
+          style={{ width: '300px', marginRight: '0.5rem' }}
+        />
+        <button type="submit">Wyślij</button>
+      </form>
+
       <ul>
-        {data.map((row, idx) => (
-          <li key={idx}>{JSON.stringify(row)}</li>
+        {messages.map(msg => (
+          <li key={msg.id}>{msg.text}</li>
         ))}
       </ul>
     </div>
