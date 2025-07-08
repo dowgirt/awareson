@@ -7,7 +7,7 @@ address_space     = ["10.0.0.0/16"]
 app_subnet_prefix = "10.0.1.0/28"
 db_subnet_prefix  = "10.0.2.0/28"
 
-# DBs 
+# Databases configuration
 databases = {
   db1 = {
     max_size_gb          = 10
@@ -17,13 +17,17 @@ databases = {
   }
 }
 
-# App Services
+# ACR
+acr_sku = "Basic"
+
+# App Services SKU
 app_service_sku_name = "B1"
+app_service_os_type = "Linux"
 
 # Tags
 tags = {
-  "createdBy" = "terraform"
-  "project"   = "App"
-  "Owner"     = "DevOps Team"
-  "Env"       = "Dev"
+  createdBy = "terraform"
+  project   = "awareson"
+  owner     = "DevOps Team"
+  env       = "dev"
 }

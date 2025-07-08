@@ -48,7 +48,7 @@ module "sql_server_databases" {
 }
 
 module "sql_private_endpoint" {
-  source = "../../modules/private_endpoint"
+  source = "../../modules/private-endpoint"
 
   name                           = local.sql_private_endpoint_name
   resource_group_name            = data.azurerm_resource_group.rg.name
@@ -77,11 +77,12 @@ module "acr" {
   acr_name            = local.acr_name
   resource_group_name = data.azurerm_resource_group.rg.name
   location            = data.azurerm_resource_group.rg.location
+  sku                 = var.acr_sku
   tags                = var.tags
 }
 
 module "app_service" {
-  source                = "../../modules/app_service"
+  source                = "../../modules/app-service"
   resource_group_name   = data.azurerm_resource_group.rg.name
   location              = data.azurerm_resource_group.rg.location
   app_service_plan_name = local.app_service_plan_name
@@ -90,7 +91,8 @@ module "app_service" {
   app_settings          = local.app_settings
   docker_image_name     = local.docker_image_name
   docker_registry_url   = local.docker_registry_url
-
+  os_type               = var.app_service_os_type
+  tags                  = var.tags
 }
 
 resource "azurerm_role_assignment" "acr_pull" {

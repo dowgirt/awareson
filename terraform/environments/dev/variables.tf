@@ -26,22 +26,48 @@ variable "project" {
   description = "Project or company name"
   type        = string
 }
+
 variable "environment" {
   description = "Deployment environment"
   type        = string
 }
+
 variable "address_space" {
-  description = "Address space for the VNet"
+  description = "Address space for the Virtual Network (VNet)"
   type        = list(string)
 }
+
 variable "app_subnet_prefix" {
   description = "CIDR block for the application subnet"
   type        = string
 }
+
 variable "db_subnet_prefix" {
   description = "CIDR block for the database subnet"
   type        = string
 }
-variable "databases" {}
-variable "tags" {}
-variable "app_service_sku_name" {}
+
+variable "databases" {
+  description = "List or map of database configurations"
+  type        = any
+}
+
+variable "app_service_sku_name" {
+  description = "SKU name for the App Service plan"
+  type        = string
+}
+
+variable "acr_sku" {
+  description = "SKU name for the ACR"
+  type        = string
+}
+
+variable "app_service_os_type" {
+  description = "OS type for app service"
+  type        = string
+}
+
+variable "tags" {
+  description = "Tags to apply to resources"
+  type        = map(string)
+}
