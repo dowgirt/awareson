@@ -86,7 +86,11 @@ module "app_service" {
   location              = data.azurerm_resource_group.rg.location
   app_service_plan_name = local.app_service_plan_name
   app_service_name      = local.app_service_name
-  sku_name              = "B1"
+  sku_name              = var.app_service_sku_name
   acr_identity_id       = module.acr.managed_identity_id
-  app_settings = local.app_settings
+  app_settings          = local.app_settings
+  docker_image_name        =
+  docker_registry_url      =
+  docker_registry_username = 
+  docker_registry_password = 
 }

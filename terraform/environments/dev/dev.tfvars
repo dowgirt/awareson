@@ -18,6 +18,9 @@ databases = {
   }
 }
 
+# App Services
+
+app_service_sku_name = "B1"
 
 # Tags
 

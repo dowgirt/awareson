@@ -22,3 +22,12 @@ output "managed_identity_principal_id" {
   value       = azurerm_user_assigned_identity.acr_identity.principal_id
   description = "Principal ID of the managed identity"
 }
+
+output "acr_admin_username" {
+  value = azurerm_container_registry.acr.admin_username
+}
+
+output "acr_admin_password" {
+  value = azurerm_container_registry.acr.admin_password
+  sensitive = true
+}
