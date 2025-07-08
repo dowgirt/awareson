@@ -44,7 +44,7 @@ jobs:
         run: npm install mssql
 
       - name: Run DB connection test
-        run: scripts/test-db-connection.js
+        run: node scripts/test-db-connection.js
 
     #   - name: Run DB connection test
     #     run: |
