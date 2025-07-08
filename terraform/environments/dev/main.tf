@@ -88,4 +88,5 @@ module "app_service" {
   app_service_name      = local.app_service_name
   sku_name              = "B1"
   acr_identity_id       = module.acr.managed_identity_id
+  app_settings = local.app_settings
 }

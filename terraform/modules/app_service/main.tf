@@ -19,4 +19,6 @@ resource "azurerm_linux_web_app" "web_app" {
 
   site_config {
   }
+
+  app_settings = var.app_settings
 }

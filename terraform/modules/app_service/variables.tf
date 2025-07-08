@@ -36,3 +36,8 @@ variable "acr_identity_id" {
   description = "Operating system: Linux or Windows"
 }
 
+variable "app_settings" {
+  description = "Application settings for the App Service"
+  type        = map(string)
+  default     = {}
+}
