@@ -79,6 +79,7 @@ module "acr" {
   location                 = data.azurerm_resource_group.rg.location
   tags                     = var.tags
   app_service_principal_id = module.app_service.app_service_principal_id
+  
 }
 
 module "app_service" {
@@ -93,6 +94,12 @@ module "app_service" {
   docker_image_name     = local.docker_image_name
   docker_registry_url   = local.docker_registry_url
 
+}
+
+resource "azurerm_role_assignment" "acr_pull" {
+  scope                = module.acr.acr_id
+  role_definition_name = "AcrPull"
+  principal_id         = module.acr.managed_identity_principal_id
 }
 
 
