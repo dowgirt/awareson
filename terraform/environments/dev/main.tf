@@ -91,6 +91,7 @@ module "app_service" {
   app_settings          = local.app_settings
   docker_image_name     = local.docker_image_name
   docker_registry_url   = local.docker_registry_url
+  os_type               = var.app_service_os_type
   tags                  = var.tags
 }
 

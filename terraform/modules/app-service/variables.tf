@@ -4,7 +4,6 @@ variable "app_service_plan_name" {}
 variable "app_service_name" {}
 variable "sku_name" {}
 variable "os_type" {}
-variable "acr_identity_id" {}
 variable "docker_image_name" {}
 variable "docker_registry_url" {}
 variable "tags" {}

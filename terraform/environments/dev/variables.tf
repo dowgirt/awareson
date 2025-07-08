@@ -62,6 +62,11 @@ variable "acr_sku" {
   type        = string
 }
 
+variable "app_service_os_type" {
+  description = "OS type for app service"
+  type        = string
+}
+
 variable "tags" {
   description = "Tags to apply to resources"
   type        = map(string)

@@ -22,6 +22,7 @@ acr_sku = "Basic"
 
 # App Services SKU
 app_service_sku_name = "B1"
+app_service_os_type = "Linux"
 
 # Tags
 tags = {
