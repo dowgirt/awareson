@@ -72,6 +72,14 @@ module "network" {
   db_subnet_prefix    = var.db_subnet_prefix
 }
 
+module "acr" {
+  source              = "../../modules/acr"
+  acr_name            = local.acr_name
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  tags                = var.tags
+}
+
 module "app_service" {
   source                = "../../modules/app_service"
   resource_group_name   = data.azurerm_resource_group.rg.name
@@ -79,4 +87,5 @@ module "app_service" {
   app_service_plan_name = local.app_service_plan_name
   app_service_name      = local.app_service_name
   sku_name              = "B1"
+  acr_identity_id       = module.acr.azurerm_user_assigned_identity.acr_id
 }

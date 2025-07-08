@@ -29,3 +29,10 @@ variable "os_type" {
   default     = "Linux"
   description = "Operating system: Linux or Windows"
 }
+
+variable "acr_identity_id" {
+  type        = string
+  default     = "Linux"
+  description = "Operating system: Linux or Windows"
+}
+
