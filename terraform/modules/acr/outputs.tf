@@ -13,11 +13,6 @@ output "managed_identity_id" {
   description = "User Assigned Managed Identity ID"
 }
 
-output "managed_identity_id" {
-  value       = azurerm_user_assigned_identity.acr_identity.id
-  description = "ID of the managed identity"
-}
-
 output "managed_identity_client_id" {
   value       = azurerm_user_assigned_identity.acr_identity.client_id
   description = "Client ID of the managed identity"
