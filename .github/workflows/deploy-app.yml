@@ -10,7 +10,7 @@ env:
   KEYVAULT_NAME: kv-awareson-dev
   DB_NAME: db1
   DB_SERVER: sql-awareson-dev.database.windows.net
-  IMAGE NAME: myapp
+  IMAGE_NAME: myapp
   IMAGE_TAG: ${{ github.sha }}
 
 jobs:
@@ -34,11 +34,6 @@ jobs:
         with:
             keyvault: ${{ env.KEYVAULT_NAME }}
             secrets: 'sql-server-admin-username, sql-server-admin-password'
-
-    #   - name: Get secrets from Azure Key Vault
-    #     run: |
-    #       echo "DB_USER=$(az keyvault secret show --vault-name ${{ env.KEYVAULT_NAME }} --name sql-server-admin-username --query value -o tsv)" >> $GITHUB_ENV
-    #       echo "DB_PASSWORD=$(az keyvault secret show --vault-name ${{ env.KEYVAULT_NAME }} --name sql-server-admin-password --query value -o tsv)" >> $GITHUB_ENV
 
       - name: Install mssql package locally
         run: npm install mssql
