@@ -28,9 +28,9 @@ async function createTableIfNotExists() {
         text NVARCHAR(MAX) NOT NULL
       )
     `);
-    console.log('✅ Table "messages" is ready');
+    console.log('Table "messages" is ready');
   } catch (err) {
-    console.error('❌ Error creating table:', err);
+    console.error('Error creating table:', err);
   }
 }
 
