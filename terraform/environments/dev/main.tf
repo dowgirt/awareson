@@ -73,11 +73,11 @@ module "network" {
 }
 
 module "acr" {
-  source                   = "../../modules/acr"
-  acr_name                 = local.acr_name
-  resource_group_name      = data.azurerm_resource_group.rg.name
-  location                 = data.azurerm_resource_group.rg.location
-  tags                     = var.tags
+  source              = "../../modules/acr"
+  acr_name            = local.acr_name
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  tags                = var.tags
 }
 
 module "app_service" {
