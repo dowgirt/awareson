@@ -4,6 +4,7 @@ resource "azurerm_service_plan" "app_plan" {
   resource_group_name = var.resource_group_name
   os_type             = var.os_type
   sku_name            = var.sku_name
+  tags                = var.tags
 }
 
 resource "azurerm_linux_web_app" "web_app" {
@@ -22,6 +23,6 @@ resource "azurerm_linux_web_app" "web_app" {
       docker_registry_url = var.docker_registry_url
     }
   }
-
   app_settings = var.app_settings
+  tags         = var.tags
 }
