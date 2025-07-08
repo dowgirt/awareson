@@ -12,27 +12,23 @@ This project demonstrates the complete deployment process of a web application o
 
 ## Features
 
-- **Deploy a web application on Azure App Service**  
-  The application connects to a MySQL or PostgreSQL database via a private endpoint.
+- **The application connects to a MySQL or PostgreSQL database via a private endpoint**
 
-- **Basic user interface**  
-  Provides simple UI to store and retrieve data from the database.
+- **Provides simple UI to store and retrieve data from the database**  
 
-- **Database connection test**  
-  Includes a simple test to verify database connectivity.
+- **Includes a simple test to verify database connectivity**  
+  
+- **The application is packaged into a Docker image with a provided Dockerfile for local build and run.**  
 
-- **Containerization**  
-  The application is packaged into a Docker image with a provided Dockerfile for local build and run.
 
-- **Infrastructure as Code with Terraform**  
-  Terraform scripts enable provisioning infrastructure across multiple environments (dev, staging, production), including:  
+- **Terraform scripts enable provisioning infrastructure across multiple environments (dev, staging, production), including:**  
   - Azure App Service  
   - Azure Database (MySQL/PostgreSQL)  
   - Virtual Network (VNet) and Subnets  
   - Private Endpoint  
 
-- **CI/CD Pipeline**  
-  Automates building and pushing Docker images, deploying Terraform infrastructure, deploying the application on Azure, and running tests.
+- **Automates building and pushing Docker images, deploying Terraform infrastructure, deploying the application on Azure, and running tests.**  
+  
 
 ---
 
