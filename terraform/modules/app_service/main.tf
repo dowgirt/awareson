@@ -12,9 +12,8 @@ resource "azurerm_linux_web_app" "web_app" {
   resource_group_name = var.resource_group_name
   service_plan_id     = azurerm_service_plan.app_plan.id
 
-  identity {
-    type         = "UserAssigned"
-    identity_ids = [var.acr_identity_id]
+ identity {
+    type = "SystemAssigned"
   }
   site_config {
     application_stack {

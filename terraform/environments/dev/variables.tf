@@ -10,7 +10,7 @@ locals {
   sql_private_endpoint_name = "pep-${local.resources_suffix}"
   acr_name                  = "acr${var.project}${var.environment}"
 
-  docker_image_name   = "1234"
+  docker_image_name   = "myapp-1b6a589"
   docker_registry_url = "https://${module.acr.acr_login_server}"
 
   app_settings = {
