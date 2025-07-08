@@ -11,7 +11,7 @@ locals {
   acr_name                  = "acr${var.project}${var.environment}"
   
 app_settings = {
-    DB_HOST     = "${module.sql-server-and-database.sql_server_fqdn}"
+    DB_HOST     = "${module.sql_server_databases.sql_server_fqdn}"
     DB_NAME     = "db1"
     DB_USER     = "admin${random_integer.sql_admin_suffix.result}"
     DB_PASSWORD = "${random_password.sql_admin_password.result}"
