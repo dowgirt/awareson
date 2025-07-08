@@ -78,8 +78,7 @@ module "acr" {
   resource_group_name      = data.azurerm_resource_group.rg.name
   location                 = data.azurerm_resource_group.rg.location
   tags                     = var.tags
-  app_service_principal_id = module.app_service.app_service_principal_id
-  
+  #app_service_principal_id = module.app_service.app_service_principal_id
 }
 
 module "app_service" {
@@ -89,7 +88,7 @@ module "app_service" {
   app_service_plan_name = local.app_service_plan_name
   app_service_name      = local.app_service_name
   sku_name              = var.app_service_sku_name
-  acr_identity_id       = module.acr.managed_identity_id
+  #acr_identity_id       = module.acr.managed_identity_id
   app_settings          = local.app_settings
   docker_image_name     = local.docker_image_name
   docker_registry_url   = local.docker_registry_url
