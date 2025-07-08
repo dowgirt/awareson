@@ -26,6 +26,7 @@ app_service_sku_name = "B1"
 
 tags = {
   "createdBy" = "terraform"
-  "project"   = "Application"
+  "project"   = "App"
   "Owner"     = "DevOps Team"
+  "Env"       = "Dev"
 }
