@@ -101,7 +101,3 @@ resource "azurerm_role_assignment" "acr_pull" {
   role_definition_name = "AcrPull"
   principal_id         = module.app_service.identity_principal_id
 }
-
-
-
-
