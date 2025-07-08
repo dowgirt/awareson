@@ -33,15 +33,15 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Install mssql package globally
-        run: npm install -g mssql
-
+      - name: Install mssql package locally
+        run: npm install mssql
 
       - name: Get secrets from Azure Key Vault
         id: get-secrets
         run: |
             echo "DB_USER=$(az keyvault secret show --vault-name ${{ env.KEYVAULT_NAME }} --name sql-server-admin-username --query value -o tsv)" >> $GITHUB_ENV
             echo "DB_PASSWORD=$(az keyvault secret show --vault-name ${{ env.KEYVAULT_NAME }}  --name sql-server-admin-password --query value -o tsv)" >> $GITHUB_ENV
+
       - name: Run DB connection test
         run: |
             node -e "
