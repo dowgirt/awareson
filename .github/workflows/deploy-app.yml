@@ -10,6 +10,9 @@ env:
   ACR_SERVER_NAME: acrawaresondev
   APP_SERVICE_NAME: app-awareson-dev
   RESOURCE_GROUP: awareson-dev-plc-rg
+  KEYVAULT_NAME: kv-awareson-dev
+  DB_NAME: db1
+  DB_SERVER: sql-awareson-dev.database.windows.net
 
 jobs:
   build-and-deploy:
@@ -29,6 +32,39 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Install mssql package globally
+        run: npm install -g mssql
+
+
+      - name: Get secrets from Azure Key Vault
+        id: get-secrets
+        run: |
+            echo "DB_USER=$(az keyvault secret show --vault-name ${{ env.KEYVAULT_NAME }} --name sql-server-admin-username --query value -o tsv)" >> $GITHUB_ENV
+            echo "DB_PASSWORD=$(az keyvault secret show --vault-name ${{ env.KEYVAULT_NAME }}  --name sql-server-admin-password --query value -o tsv)" >> $GITHUB_ENV
+      - name: Run DB connection test
+        run: |
+            node -e "
+            const sql = require('mssql');
+            (async () => {
+            try {
+                const config = {
+                user: process.env.DB_USER,
+                password: process.env.DB_PASSWORD,
+                server: process.env.DB_SERVER,
+                database: process.env.DB_NAME,
+                options: { encrypt: true }
+                };
+                const pool = await sql.connect(config);
+                console.log('DB connection successful');
+                await pool.close();
+                process.exit(0);
+            } catch (err) {
+                console.error('DB connection failed:', err);
+                process.exit(1);
+            }
+            })();
+            "   
 
       - name: Set image tag to commit SHA
         id: vars

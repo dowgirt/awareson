@@ -19,7 +19,7 @@ locals {
     DB_USER                             = "admin${random_integer.sql_admin_suffix.result}"
     DB_PASSWORD                         = "${random_password.sql_admin_password.result}"
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = "false"
-    WEBSITES_PORT                       = "3000"
+    WEBSITES_PORT                       = "8080"
   }
 }
 variable "project" {
