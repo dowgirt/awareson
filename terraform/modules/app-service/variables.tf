@@ -10,6 +10,3 @@ variable "tags" {}
 variable "app_settings" {
   type = map(string)
 }
-variable "site_config" {
-  type = map(string)
-}
