@@ -1,20 +1,22 @@
-FROM python:3.10-slim
-
-# Instalacja zależności systemowych i ODBC Drivera
-RUN apt-get update && apt-get install -y \
-    gnupg curl unixodbc-dev gcc g++ && \
-    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
-    curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
-    apt-get update && ACCEPT_EULA=Y apt-get install -y msodbcsql17 && \
-    apt-get clean
+# Etap 1: budowanie frontendu
+FROM node:18 AS build
 
 WORKDIR /app
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+COPY client ./client
+RUN cd client && npm install && npm run build
 
-COPY . .
+# Etap 2: backend + zbudowany frontend
+FROM node:18
 
-EXPOSE 80
+WORKDIR /app
 
-CMD ["gunicorn", "-b", "0.0.0.0:80", "app:app"]
+COPY --from=build /app/client/build ./client/build
+COPY server.js ./
+COPY package.json ./
+RUN npm install
+
+ENV PORT=8080
+EXPOSE 8080
+
+CMD ["node", "server.js"]

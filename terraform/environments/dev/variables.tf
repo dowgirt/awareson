@@ -10,15 +10,16 @@ locals {
   sql_private_endpoint_name = "pep-${local.resources_suffix}"
   acr_name                  = "acr${var.project}${var.environment}"
 
-  docker_image_name   = "1234"
+  docker_image_name   = "myapp-1b6a589"
   docker_registry_url = "https://${module.acr.acr_login_server}"
 
   app_settings = {
-    DB_HOST                             = "${module.sql_server_databases.sql_server_fqdn}"
+    DB_SERVER                           = "${module.sql_server_databases.sql_server_fqdn}"
     DB_NAME                             = "db1"
     DB_USER                             = "admin${random_integer.sql_admin_suffix.result}"
     DB_PASSWORD                         = "${random_password.sql_admin_password.result}"
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = "false"
+    WEBSITES_PORT                       = "8080"
   }
 }
 variable "project" {

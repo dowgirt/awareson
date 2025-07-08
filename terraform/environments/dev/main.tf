@@ -73,13 +73,11 @@ module "network" {
 }
 
 module "acr" {
-  source                   = "../../modules/acr"
-  acr_name                 = local.acr_name
-  resource_group_name      = data.azurerm_resource_group.rg.name
-  location                 = data.azurerm_resource_group.rg.location
-  tags                     = var.tags
-  app_service_principal_id = module.app_service.app_service_principal_id
-  
+  source              = "../../modules/acr"
+  acr_name            = local.acr_name
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  tags                = var.tags
 }
 
 module "app_service" {
@@ -89,7 +87,6 @@ module "app_service" {
   app_service_plan_name = local.app_service_plan_name
   app_service_name      = local.app_service_name
   sku_name              = var.app_service_sku_name
-  acr_identity_id       = module.acr.managed_identity_id
   app_settings          = local.app_settings
   docker_image_name     = local.docker_image_name
   docker_registry_url   = local.docker_registry_url
@@ -99,9 +96,7 @@ module "app_service" {
 resource "azurerm_role_assignment" "acr_pull" {
   scope                = module.acr.acr_id
   role_definition_name = "AcrPull"
-  principal_id         = module.acr.managed_identity_principal_id
+  principal_id         = module.app_service.identity_principal_id
+
+  depends_on = [module.app_service]
 }
-
-
-
-
