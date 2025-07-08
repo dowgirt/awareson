@@ -24,7 +24,9 @@ This project demonstrates the complete deployment process of a web application o
   - Azure App Service  
   - Azure Database (MySQL/PostgreSQL)  
   - Virtual Network (VNet) and Subnets  
-  - Private Endpoint  
+  - Private Endpoint
+  - Key Vault
+  - Container Registry  
 
 - **Automates building and pushing Docker images, deploying Terraform infrastructure, deploying the application on Azure, and running tests.**  
   
