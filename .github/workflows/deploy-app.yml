@@ -10,6 +10,8 @@ env:
   KEYVAULT_NAME: kv-awareson-dev
   DB_NAME: db1
   DB_SERVER: sql-awareson-dev.database.windows.net
+  IMAGE NAME: myapp
+  IMAGE_TAG: ${{ github.sha }}
 
 jobs:
   db-test:
@@ -20,52 +22,59 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-    steps:
-      - uses: actions/checkout@v3
-      
+    steps:    
       - name: Azure Login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Get secrets from Azure Key Vault
-        run: |
-          echo "DB_USER=$(az keyvault secret show --vault-name ${{ env.KEYVAULT_NAME }} --name sql-server-admin-username --query value -o tsv)" >> $GITHUB_ENV
-          echo "DB_PASSWORD=$(az keyvault secret show --vault-name ${{ env.KEYVAULT_NAME }} --name sql-server-admin-password --query value -o tsv)" >> $GITHUB_ENV
+      - name: Get DB secrets from Key Vault
+        uses: azure/get-keyvault-secrets@v1
+        with:
+            keyvault: ${{ env.KEYVAULT_NAME }}
+            secrets: |
+              sql-server-admin-username
+              sql-server-admin-password
+
+    #   - name: Get secrets from Azure Key Vault
+    #     run: |
+    #       echo "DB_USER=$(az keyvault secret show --vault-name ${{ env.KEYVAULT_NAME }} --name sql-server-admin-username --query value -o tsv)" >> $GITHUB_ENV
+    #       echo "DB_PASSWORD=$(az keyvault secret show --vault-name ${{ env.KEYVAULT_NAME }} --name sql-server-admin-password --query value -o tsv)" >> $GITHUB_ENV
 
       - name: Install mssql package locally
         run: npm install mssql
 
       - name: Run DB connection test
-        run: |
-          node -e "
-          const sql = require('mssql');
-          (async () => {
-            try {
-              const config = {
-                user: process.env.DB_USER,
-                password: process.env.DB_PASSWORD,
-                server: process.env.DB_SERVER,
-                database: process.env.DB_NAME,
-                options: { encrypt: true }
-              };
-              const pool = await sql.connect(config);
-              console.log('DB connection successful');
-              await pool.close();
-              process.exit(0);
-            } catch (err) {
-              console.error('DB connection failed:', err);
-              process.exit(1);
-            }
-          })();
-          "
+        run: scripts/test-db-connection.js
+
+    #   - name: Run DB connection test
+    #     run: |
+    #       node -e "
+    #       const sql = require('mssql');
+    #       (async () => {
+    #         try {
+    #           const config = {
+    #             user: process.env.SQL_SERVER_ADMIN_USERNAME,
+    #             password: process.env.SQL_SERVER_ADMIN_PASSWORD,
+    #             server: process.env.DB_SERVER,
+    #             database: process.env.DB_NAME,
+    #             options: { encrypt: true }
+    #           };
+    #           const pool = await sql.connect(config);
+    #           console.log('DB connection successful');
+    #           await pool.close();
+    #           process.exit(0);
+    #         } catch (err) {
+    #           console.error('DB connection failed:', err);
+    #           process.exit(1);
+    #         }
+    #       })();
+    #       "
 
   build-push:
     runs-on: ubuntu-latest
     environment: dev
     needs: db-test
-    env:
-      IMAGE_TAG: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v3
       
@@ -78,20 +87,16 @@ jobs:
         run: az acr login --name ${{ env.ACR_SERVER_NAME }}
 
       - name: Build Docker image
-        run: docker build -t ${{ env.ACR_SERVER_NAME }}.azurecr.io/myapp:${{ env.IMAGE_TAG }} ./app
+        run: docker build -t ${{ env.ACR_SERVER_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} ./app
 
       - name: Push Docker image to ACR
-        run: docker push ${{ env.ACR_SERVER_NAME }}.azurecr.io/myapp:${{ env.IMAGE_TAG }}
+        run: docker push ${{ env.ACR_SERVER_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
   deploy-dev:
     runs-on: ubuntu-latest
     environment: dev
     needs: build-push
-    env:
-      IMAGE_TAG: ${{ github.sha }}
     steps:
-      - uses: actions/checkout@v3
-      
       - name: Azure Login
         uses: azure/login@v1
         with:
@@ -101,5 +106,5 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.APP_SERVICE_NAME }}
-          images: ${{ env.ACR_SERVER_NAME }}.azurecr.io/myapp:${{ env.IMAGE_TAG }}
+          images: ${{ env.ACR_SERVER_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           resource-group-name: ${{ env.RESOURCE_GROUP }}
