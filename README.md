@@ -39,23 +39,10 @@ This project demonstrates the complete deployment process of a web application o
 ## Technologies
 
 - Azure App Service  
-- Azure Database for MySQL/PostgreSQL  
+- Azure Database for MySQL
 - Terraform  
 - Docker  
-- Node.js / Python (or preferred language)  
-- GitHub Actions or GitLab CI  
-- Azure Container Registry or Docker Hub  
+- Node.js / Bash
+- GitHub Actions
+- Azure Container Registry
 
----
-
-## Getting Started
-
-### 1. Configure Terraform
-
-1. Copy and update the `terraform.tfvars` file (or the environment-specific `.tfvars`) with your configuration.  
-2. Run the following commands:
-
-```bash
-terraform init
-terraform plan -var-file="terraform.tfvars"
-terraform apply -var-file="terraform.tfvars"
