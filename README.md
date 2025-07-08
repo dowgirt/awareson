@@ -12,14 +12,13 @@ This project demonstrates the complete deployment process of a web application o
 
 ## Features
 
-- **The application connects to a MySQL or PostgreSQL database via a private endpoint**
+- **The application connects to a MySQL database via a private endpoint**
 
 - **Provides simple UI to store and retrieve data from the database**  
 
 - **Includes a simple test to verify database connectivity**  
   
-- **The application is packaged into a Docker image with a provided Dockerfile for local build and run.**  
-
+- **The application is packaged into a Docker image with a provided Dockerfile for build and run.**  
 
 - **Terraform scripts enable provisioning infrastructure across multiple environments (dev, staging, production), including:**  
   - Azure App Service  
