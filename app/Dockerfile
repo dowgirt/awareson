@@ -1,4 +1,3 @@
-# Etap 1: budowanie frontendu
 FROM node:18 AS build
 
 WORKDIR /app
@@ -6,7 +5,6 @@ WORKDIR /app
 COPY client ./client
 RUN cd client && npm install && npm run build
 
-# Etap 2: backend + zbudowany frontend
 FROM node:18
 
 WORKDIR /app
