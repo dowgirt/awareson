@@ -10,12 +10,12 @@ on:
   workflow_dispatch:
 
 env:
-  ACR_SERVER_NAME: acrawaresondev
-  APP_SERVICE_NAME: app-awareson-dev
-  RESOURCE_GROUP: awareson-dev-plc-rg
-  KEYVAULT_NAME: kv-awareson-dev
+  ACR_SERVER_NAME: acrportfoliodev
+  APP_SERVICE_NAME: app-portfolio-dev
+  RESOURCE_GROUP: portfolio-dev-plc-rg
+  KEYVAULT_NAME: kv-portfolio-dev
   DB_NAME: db1
-  DB_SERVER: sql-awareson-dev.database.windows.net
+  DB_SERVER: sql-portfolio-dev.database.windows.net
   IMAGE_NAME: myapp
   IMAGE_TAG: ${{ github.sha }}
 
