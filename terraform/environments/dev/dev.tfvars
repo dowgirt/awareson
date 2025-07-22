@@ -1,5 +1,5 @@
 # General
-project     = "awareson"
+project     = "portfolio"
 environment = "dev"
 
 # Subnet CIDRs
@@ -27,7 +27,7 @@ app_service_os_type = "Linux"
 # Tags
 tags = {
   createdBy = "terraform"
-  project   = "awareson"
+  project   = "portfolio"
   owner     = "DevOps Team"
   env       = "dev"
 }
