@@ -53,7 +53,7 @@ jobs:
   #         DB_NAME: ${{ env.DB_NAME }}
   sast:
     name: Validate code
-    uses: dowgirt/course-actions/.github/workflows/sast-validation-semgrep.yaml@solution-security
+    uses: dowgirt/course-actions/.github/workflows/sast-validation-semgrep.yaml@main
     permissions:
       contents: write
 #    needs: [db-test]
@@ -65,7 +65,7 @@ jobs:
       upload-results-github-security: false
   sca:
     name: Validate dependencies
-    uses: dowgirt/course-actions/.github/workflows/sca-validation-trivy.yaml@solution-security
+    uses: dowgirt/course-actions/.github/workflows/sca-validation-trivy.yaml@main
     permissions:
       contents: write
 #    needs: [check]
