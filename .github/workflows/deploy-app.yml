@@ -51,12 +51,23 @@ jobs:
           DB_PASSWORD: ${{ env.sql-server-admin-password }}
           DB_SERVER: ${{ env.DB_SERVER }}
           DB_NAME: ${{ env.DB_NAME }}
-
+  sast:
+    name: Validate code
+    uses: asmaestro/actions/.github/workflows/sast-validation-semgrep.yaml@solution-security
+    permissions:
+      contents: write
+    needs: [db-test]
+    with:
+      rules: "p/javascript"
+      upload-artifact: true
+      upload-release-assets: true
+      release-tag: ${{ github.sha }}
+      upload-results-github-security: false
 
   build-push:
     runs-on: ubuntu-latest
     environment: dev
-    needs: db-test
+    needs: sast
     steps:
       - uses: actions/checkout@v3
       
