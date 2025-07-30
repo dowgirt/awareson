@@ -53,7 +53,7 @@ jobs:
   #         DB_NAME: ${{ env.DB_NAME }}
   sast:
     name: Validate code
-    uses: asmaestro/actions/.github/workflows/sast-validation-semgrep.yaml@solution-security
+    uses: dowgirt/course-actions/.github/workflows/sast-validation-semgrep.yaml@solution-security
     permissions:
       contents: write
 #    needs: [db-test]
@@ -62,6 +62,21 @@ jobs:
       upload-artifact: true
       upload-release-assets: true
       release-tag: ${{ github.sha }}
+      upload-results-github-security: false
+  sca:
+    name: Validate dependencies
+    uses: dowgirt/course-actions/.github/workflows/sca-validation-trivy.yaml@solution-security
+    permissions:
+      contents: write
+#    needs: [check]
+    with:
+      exit-code: 1 # fail the job if issues are found
+      severity: HIGH,CRITICAL
+      ignore-unfixed: true
+      format: sarif
+      upload-artifact: true
+      upload-release-assets: true
+      release-tag: ${{ inputs.release_tag }}
       upload-results-github-security: false
 
   build-push:
