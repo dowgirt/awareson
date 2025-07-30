@@ -76,7 +76,7 @@ jobs:
       format: sarif
       upload-artifact: true
       upload-release-assets: true
-      release-tag: ${{ inputs.release_tag }}
+      release-tag: ${{ github.sha }}
       upload-results-github-security: false
 
   build-push:
